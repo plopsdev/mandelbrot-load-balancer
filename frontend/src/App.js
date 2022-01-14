@@ -55,13 +55,17 @@ function App() {
         const startTime = Date.now()
         const halfPixelSize = (complexPlane.imaginary.total/imageHeight)/2
         let requests = []
+        let total = 0;
+        console.log(imageHeight, imageWidth)
         //create the requests to send 
         for (let y=1; y<=imageHeight; y++){
             for (let x=1; x<=imageWidth; x++){
+                total++
                 let { real, imaginary } = computeComplexCoordinates(x, y, halfPixelSize)
                 requests.push({real: real, imaginary: imaginary, iterations: iterations})
             }
         }
+        console.log(total)
         //divide all the requests into multiple smaller groups of fewer requests (150)
         let numberOfDivision = requests.length/150
         console.log(requests.length)
@@ -101,6 +105,7 @@ function App() {
                         setImageWidth(e.target.value);
                         setImageHeight(e.target.value*2/3)
                     }}>
+                        <option value={30}>30x20</option>
                         <option value={60}>60x40</option>
                         <option value={120}>120x80</option>
                         <option value={240}>240x160</option>
